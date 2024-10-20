@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <None Include="wwwroot\HomePage.html" />
-    <None Include="wwwroot\Styles.css" />
+    <None Include="wwwroot\HomePageStyles.css" />
   </ItemGroup>
 
 </Project>

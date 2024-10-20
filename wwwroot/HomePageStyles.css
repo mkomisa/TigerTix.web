@@ -1,0 +1,66 @@
+﻿body {
+    font-family: Arial, sans-serif;
+    background-color: white; /* Make the entire background white */
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    text-align: center;
+    padding: 20px;
+    background-color: white; /* Ensure the header is also white */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.title {
+    color: orange;
+    font-size: 36px;
+    margin: 0;
+}
+
+.description {
+    font-size: 18px;
+    color: #555;
+    margin-top: 10px;
+}
+
+.search-container {
+    margin: 30px auto;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.search-bar {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+    .search-bar::placeholder {
+        color: #aaa;
+    }
+
+.login-signup-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: orange;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-signup-btn:hover {
+    background-color: darkorange;
+
+}
+
