@@ -1,6 +1,7 @@
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
-
+using TigerTix.web.Data.Entities;;
 var builder = WebApplication.CreateBuilder(args);
 
 var app = builder.Build();
