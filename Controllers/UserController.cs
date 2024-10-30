@@ -44,14 +44,14 @@ namespace TigerTix.web.Controllers
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                string query = "INSERT INTO Users (FirstName, LastName, Username, PasswordHash) VALUES (@FirstName, @LastName, @Username, @PasswordHash)";
+                string query = "INSERT INTO Users (FirstName, LastName, Username, Password) VALUES (@FirstName, @LastName, @Username, @Password)";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@FirstName", user.FirstName);
                     command.Parameters.AddWithValue("@LastName", user.LastName);
                     command.Parameters.AddWithValue("@Username", user.Username);
-                    command.Parameters.AddWithValue("@PasswordHash", user.Password);
+                    command.Parameters.AddWithValue("@Password", user.Password);
 
                     command.ExecuteNonQuery();
                 }
