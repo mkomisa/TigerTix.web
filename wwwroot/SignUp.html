@@ -3,37 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
-    <link rel="stylesheet" href="SignUpStyles.css">
+    <title>Signup Form</title>
 </head>
 <body>
+    <form id="signupForm" action="/user/signup" method="post">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required><br><br>
 
-    <div class="signup-container">
-        <h2 class="signup-title">Sign Up</h2>
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required><br><br>
 
-        <div class="input-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" class="signup-input" placeholder="youremail@something.com">
-        </div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br><br>
 
-        <div class="input-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" class="signup-input" placeholder="password">
-        </div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
 
-        <div class="input-group">
-            <label for="confirm-password">Confirm Password</label>
-            <input type="password" id="confirm-password" class="signup-input" placeholder="password">
-        </div>
-
-        <div class="input-group">
-            <label for="cuid">CUID (Optional)</label>
-            <input type="text" id="cuid" class="signup-input" placeholder="C###########">
-        </div>
-
-        <button class="signup-button" onclick="window.location.href='/wwwroot/HomePage.html'">Sign Up</button>
-
-        <p class="switch-screen">Already have an account? <button class="switch-button" onclick="window.location.href='LoginScreen.html'">Log In</button></p>
-    </div>
+        <button type="submit">Signup</button>
+    </form>
 </body>
 </html>
