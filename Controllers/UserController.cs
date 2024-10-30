@@ -70,10 +70,13 @@ public class UserController : Controller
 
             if (user == null)
             {
-                return Unauthorized("Invalid username or password.");
+                return Redirect("/LoginScreen.html?status=invalid");
             }
 
-            return Ok("Sign in successful.");
+             // Redirect to HomePage.html with user information in query strings
+            string fullName = $"{user.FirstName} {user.LastName}";
+            return Redirect($"/HomePage.html?username={user.Username}&fullname={fullName}");
+
         }
 
     private User ValidateCredentials(string username, string password){
