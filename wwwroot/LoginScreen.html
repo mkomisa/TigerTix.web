@@ -8,24 +8,15 @@
     <link rel="stylesheet" href="LoginScreenStyles.css">
 </head>
 <body>
-   
+   <form action="/user/signin" method="Post">
+        <label for ="username">UserName: </label> 
+        <input type="text" id="username" name="username" required> <br><br>
 
-    <div class="login-container">
-        <h2 class="login-title">Log In</h2>
+        <label for="password">Password: </label>
+        <input type="password" id="password" name="password"><br><br>
+        
+        <button type="submit">SignIn</button>
+   </form>
 
-        <div class="input-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" class="login-input" placeholder="youremail@something.com">
-        </div>
-
-        <div class="input-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" class="login-input" placeholder="password">
-        </div>
-
-        <button class="login-button" onclick="window.location.href='/wwwroot/HomePage.html'">Log In</button>
-
-        <p class="switch-screen">Don't have an account? <button class="switch-button" onclick="window.location.href='SignUp.html'">Sign Up</button></p>
-    </div>
 </body>
 </html>
