@@ -1,17 +1,15 @@
-﻿
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log In</title>
-    <link rel="stylesheet" href="LoginScreenStyles.css">
+    <link rel="stylesheet" href="EventManager.css">
 </head>
 <body>
     <div id="error-display"></div>
-    <div id="signup-status"></div>
-
-   <form class ="container" action="/user/signin" method="Post">
+    <h1>Event Manager Login</h1>
+   <form class ="container" action="/eventmanager/signin" method="Post">
         <label for ="username">Username: </label> 
         <input type="text" id="username" name="username" required> <br><br>
 
@@ -20,9 +18,6 @@
         
         <button type="submit">Sign In</button><br><br>
    </form>
-   <button type="button" onclick="window.location.href='/SignUp.html'">Sign Up</button><br><br>
-   <p>For event managers please sign in below:</p><br>
-   <button type="button" onclick="window.location.href='/EventManagerLogin.html'">Event Manager Sign In</button>
 
    <script>
     function getQueryStringValue(name) {
@@ -30,18 +25,11 @@
             return urlParams.get(name);
     }
 
-    const status=getQueryStringValue("status");
-    const signup=getQueryStringValue("signup");
+    const status=getQueryStringValue("status")
 
     if(status=="invalid"){
         const errorDisplayDiv=document.getElementById('error-display');
-        errorDisplayDiv.innerHTML = `<p class="error-message">Invalid username or password.</p> <br><br>`;
-    }
-
-    if(signup=="successful")
-    {
-        const signupDisplayDiv=document.getElementById('signup-status');
-        signupDisplayDiv.innerHTML='<p id="signup-success">Sign Up Successful</p>';
+        errorDisplayDiv.innerHTML = `<p class="error-message">Invalid username or password.</p> <br><br>`
     }
 
    </script>

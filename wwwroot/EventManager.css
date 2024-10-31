@@ -1,4 +1,7 @@
-﻿body {
+h1{
+    color: orange;
+}
+body {
     font-family: Arial, sans-serif;
     background-color: white;
     margin: 0;
@@ -49,10 +52,4 @@ button:hover {
 
 p{
     font-size: 15px;
-}
-
-#signup-success{
-    color:#45a049;
-    font-weight: bold;
-    margin-top: 10px;
 }
