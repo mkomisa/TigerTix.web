@@ -1,16 +1,15 @@
-﻿
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log In</title>
-    <link rel="stylesheet" href="LoginScreenStyles.css">
+    <link rel="stylesheet" href="EventManager.css">
 </head>
 <body>
     <div id="error-display"></div>
 
-   <form class ="container" action="/user/signin" method="Post">
+   <form class ="container" action="/EventManager/SignIn" method="Post">
         <label for ="username">Username: </label> 
         <input type="text" id="username" name="username" required> <br><br>
 
@@ -19,9 +18,6 @@
         
         <button type="submit">SignIn</button><br><br>
    </form>
-   <button type="buttton" onclick="window.location.href='/SignUp.html'">Sign Up</button><br><br>
-   <p>For event managers please sign in below:</p><br>
-   <button type="button" onclock="window.location.href='/EventManage.html'">Event Manager Sign In</button>
 
    <script>
     function getQueryStringValue(name) {
