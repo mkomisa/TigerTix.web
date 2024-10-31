@@ -22,25 +22,25 @@ public class EventManagersController : Controller{
                 return BadRequest("Username and password are required.");
             }
 
-            var user = ValidateCredentials(username, password);
+            var manager = ValidateCredentials(username, password);
 
-            if (user == null)
+            if (manager == null)
             {
-                return Redirect("/EventManagerLoginScreen.html?status=invalid");
+                return Redirect("/EventManagerLogin.html?status=invalid");
             }
 
-             // Redirect to HomePage.html with user information in query strings
-            string fullName = $"{user.FirstName} {user.LastName}";
-            return Redirect($"/HomePage.html?username={user.Username}&fullname={fullName}");
+             // Redirect to HomePage.html with manager information in query strings
+            string fullName = $"{manager.FirstName} {manager.LastName}";
+            return Redirect($"/HomePage.html?username={manager.Username}&fullname={fullName}");
 
         }
 
-    private User ValidateCredentials(string username, string password){
+    private EventManager ValidateCredentials(string username, string password){
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
             connection.Open();
 
-            string query = "SELECT * FROM EventMangers WHERE Username = @Username";
+            string query = "SELECT * FROM EventManagers WHERE Username = @Username";
             using (SqlCommand command = new SqlCommand(query, connection))
             {
                 command.Parameters.AddWithValue("@Username", username);
@@ -55,9 +55,9 @@ public class EventManagersController : Controller{
                         // In real scenarios, passwords should be hashed and compared securely
                         if (password == storedPassword)
                         {
-                            return new User
+                            return new EventManager
                             {
-                                UserId = (int)reader["UserId"],
+                                ManagerId = (int)reader["ManagerId"],
                                 FirstName = reader["FirstName"].ToString(),
                                 LastName = reader["LastName"].ToString(),
                                 Username = reader["Username"].ToString()
@@ -72,10 +72,4 @@ public class EventManagersController : Controller{
         return null; // User not found or password doesn't match
     }
     }
-}
-
-    public 
-
-
-}
 }

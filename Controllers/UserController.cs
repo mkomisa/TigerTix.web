@@ -35,12 +35,17 @@ public class UserController : Controller
         };
 
         // Save the user to the SQL database
-        SaveUserToDatabase(user);
-
-        return Ok("User signed up successfully.");
+        int check=SaveUserToDatabase(user);
+        //rows were affected so signup worked
+        if (check>0){
+            return Redirect("/LoginScreen.html?signup=successful");
+        }
+        else{
+            return BadRequest("Sign up Failed.");
+        }
     }
 
-    private void SaveUserToDatabase(User user)
+    private int SaveUserToDatabase(User user)
     {
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
@@ -53,8 +58,8 @@ public class UserController : Controller
                 command.Parameters.AddWithValue("@LastName", user.LastName);
                 command.Parameters.AddWithValue("@Username", user.Username);
                 command.Parameters.AddWithValue("@Password", user.Password);
-
-                command.ExecuteNonQuery();
+                //commadn.ExecutenonQuery retuns number of rows affected
+                return command.ExecuteNonQuery();
             }
         }
     }

@@ -9,6 +9,7 @@
 </head>
 <body>
     <div id="error-display"></div>
+    <div id="signup-status"></div>
 
    <form class ="container" action="/user/signin" method="Post">
         <label for ="username">Username: </label> 
@@ -17,11 +18,11 @@
         <label for="password">Password: </label>
         <input type="password" id="password" name="password"><br><br>
         
-        <button type="submit">SignIn</button><br><br>
+        <button type="submit">Sign In</button><br><br>
    </form>
-   <button type="buttton" onclick="window.location.href='/SignUp.html'">Sign Up</button><br><br>
+   <button type="button" onclick="window.location.href='/SignUp.html'">Sign Up</button><br><br>
    <p>For event managers please sign in below:</p><br>
-   <button type="button" onclock="window.location.href='/EventManage.html'">Event Manager Sign In</button>
+   <button type="button" onclick="window.location.href='/EventManagerLogin.html'">Event Manager Sign In</button>
 
    <script>
     function getQueryStringValue(name) {
@@ -29,11 +30,18 @@
             return urlParams.get(name);
     }
 
-    const status=getQueryStringValue("status")
+    const status=getQueryStringValue("status");
+    const signup=getQueryStringValue("signup");
 
     if(status=="invalid"){
         const errorDisplayDiv=document.getElementById('error-display');
-        errorDisplayDiv.innerHTML = `<p class="error-message">Invalid username or password.</p> <br><br>`
+        errorDisplayDiv.innerHTML = `<p class="error-message">Invalid username or password.</p> <br><br>`;
+    }
+
+    if(signup=="successful")
+    {
+        const signupDisplayDiv=document.getElementById('signup-status');
+        signupDisplayDiv.innerHTML='<p id="signup-success">Sign Up Successful</p>';
     }
 
    </script>
