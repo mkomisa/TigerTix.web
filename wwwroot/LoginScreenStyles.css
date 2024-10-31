@@ -2,11 +2,7 @@
     font-family: Arial, sans-serif;
     background-color: white;
     margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    padding: 20px;
 }
 
 form {
@@ -14,6 +10,7 @@ form {
     padding: 0;
     border-radius: 8px;
     margin-left: 0;
+    max-width: 400px;
 }
 
 label {
@@ -42,4 +39,10 @@ button {
 
 button:hover {
     background-color: #45a049;
+}
+
+.error-message{
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
 }

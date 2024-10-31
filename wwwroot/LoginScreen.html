@@ -8,15 +8,34 @@
     <link rel="stylesheet" href="LoginScreenStyles.css">
 </head>
 <body>
-   <form action="/user/signin" method="Post">
-        <label for ="username">UserName: </label> 
+    <div id="error-display"></div>
+
+   <form class ="container" action="/user/signin" method="Post">
+        <label for ="username">Username: </label> 
         <input type="text" id="username" name="username" required> <br><br>
 
         <label for="password">Password: </label>
         <input type="password" id="password" name="password"><br><br>
         
-        <button type="submit">SignIn</button>
+        <button type="submit">SignIn</button><br><br>
    </form>
+   <button type="buttton" onclick="window.location.href='/SignUp.html'">Sign Up</button>
+   <script>
+
+    function getQueryStringValue(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+    }
+
+    const status=getQueryStringValue("status")
+
+    if(status=="invalid"){
+        const errorDisplayDiv=document.getElementById('error-display');
+        errorDisplayDiv.innerHTML = `<p class="error-message">Invalid username or password.</p> <br><br>`
+    }
+
+   </script>
+
 
 </body>
 </html>

@@ -9,11 +9,33 @@
 <body>
     <div class="header">
         <h1 class="title">Tiger Tix</h1>
+
+        <div id="user-info" style="float: right;"></div>
+
         <button class="login-signup-btn" onclick="window.location.href='LoginScreen.html'">Login / Sign Up</button>
         <p class="description">Your go-to place for finding and buying tickets for all Tiger events.</p>
     </div>
+
     <div class="search-container">
         <input type="text" class="search-bar" placeholder="search for events">
     </div>
+
+    <script>
+        // Function to get the value of a query string parameter by name
+        function getQueryStringValue(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Get the username and fullname from the query string
+        const username = getQueryStringValue('username');
+        const fullname = getQueryStringValue('fullname');
+
+        // Display user information if available
+        if (username && fullname) {
+            const userInfoDiv = document.getElementById('user-info');
+            userInfoDiv.innerHTML = `Welcome, ${fullname} <a href="LoginScreen.html">Logout</a>`;
+        }
+    </script>
 </body>
 </html>
