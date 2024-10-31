@@ -5,7 +5,7 @@ using TigerTix.web.Data.Entities;
 
 namespace TigerTix.web.Controllers
 {
-public class EventController : BaseController{
+public class EventController : ControllerBase{
 
 }
 }
