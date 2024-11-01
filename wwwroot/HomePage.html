@@ -16,6 +16,7 @@
         <p class="description">Your go-to place for finding and buying tickets for all Tiger events.</p>
     </div>
 
+    <div id="manager-actions"></div>
     <div class="search-container">
         <input type="text" class="search-bar" placeholder="search for events">
     </div>
@@ -30,14 +31,26 @@
             return urlParams.get(name);
         }
 
-        // Get the username and fullname from the query string
+        
         const username = getQueryStringValue('username');
         const fullname = getQueryStringValue('fullname');
-
+        const MangerId =getQueryStringValue('ManagerId')
         // Display user information if available
         if (username && fullname) {
             const userInfoDiv = document.getElementById('user-info');
             userInfoDiv.innerHTML = `Welcome, ${fullname} <a href="LoginScreen.html">Logout</a>`;
+        }
+
+        if(MangerId){
+            const managerActionsDiv = document.getElementById('manager-actions');
+            managerActionsDiv.innerHTML = `
+            <p>Manager Acations</p>
+            <div class="button-container">
+            <button id="delete-button">Delete Event</button>
+            </div>
+            <div class="button-container">
+            <button id="post-event-button">Post Event</button>
+            </div>`;
         }
 
         async function fetchEvents() {
