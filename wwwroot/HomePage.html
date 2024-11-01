@@ -20,6 +20,9 @@
         <input type="text" class="search-bar" placeholder="search for events">
     </div>
 
+    <div id="events-list"></div>
+
+
     <script>
         // Function to get the value of a query string parameter by name
         function getQueryStringValue(name) {
@@ -36,6 +39,33 @@
             const userInfoDiv = document.getElementById('user-info');
             userInfoDiv.innerHTML = `Welcome, ${fullname} <a href="LoginScreen.html">Logout</a>`;
         }
+
+        async function fetchEvents() {
+            try {
+                const response = await fetch('/api/events',{method:'GET'});
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const events = await response.json();
+                const eventsListDiv = document.getElementById('events-list');
+                events.forEach(event => {
+                    const eventDiv = document.createElement('div');
+                    eventDiv.classList.add('events-item');
+                    eventDiv.innerHTML = `
+                        <button class="event-button">
+                        <h3>${event.title}</h3>
+                        <p>Date: ${event.date}</p>
+                        <p>Time: ${event.time}</p>
+                        <p>Location: ${event.location}</p>
+                        </button>
+                    `;
+                    eventsListDiv.appendChild(eventDiv);
+                });
+            } catch (error) {
+                console.error('There was a problem fetching the events:', error);
+            }
+        }
+    window.onload = fetchEvents;
     </script>
 </body>
 </html>
