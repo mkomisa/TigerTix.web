@@ -11,8 +11,7 @@
         <h1 class="title">Tiger Tix</h1>
 
         <div id="user-info" style="float: right;"></div>
-
-        <button class="login-signup-btn" onclick="window.location.href='LoginScreen.html'">Login / Sign Up</button>
+        <button class="login-signup-btn" id="signInButton"   onclick="window.location.href='LoginScreen.html'">Login / Sign Up</button>
         <p class="description">Your go-to place for finding and buying tickets for all Tiger events.</p>
     </div>
 
@@ -38,7 +37,10 @@
         // Display user information if available
         if (username && fullname) {
             const userInfoDiv = document.getElementById('user-info');
-            userInfoDiv.innerHTML = `Welcome, ${fullname} <a href="LoginScreen.html">Logout</a>`;
+            userInfoDiv.innerHTML = `Welcome, ${fullname} <a href="/HomePage.html">Logout</a>`;
+            //delete SignIn or Signup button if signed in
+            const signInButton=document.getElementById('signInButton');
+            signInButton.remove();
         }
 
         if(MangerId){
@@ -49,7 +51,7 @@
             <button id="delete-button">Delete Event</button>
             </div>
             <div class="button-container">
-            <button id="post-event-button">Post Event</button>
+            <button id="post-event-button" onclick="window.location.href='/PostEvent.html'">Post Event</button>
             </div>`;
         }
 

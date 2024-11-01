@@ -76,4 +76,8 @@
 #post-event-button:hover{
     background-color: green;
 }
-
+#events-list{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
