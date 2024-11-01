@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Event</title>
+    <link rel="stylesheet" href="PostEvent.html">
+
+<body>
+    <h1>Post Event</h1>
+    <form  id="post-event-form">
+        <label for="title">Title: </label>
+        <input type="text" id="title" name="title"><br><br>
+
+        <label for="date">Date: </label>
+        <input type="text" id="date" name="date"><br><br>
+
+        <label for="time">Time: </label>
+        <input type="text" name="time" id="time"><br><br>
+
+        <label for="location">Location: </label>
+        <input type="text" id="location" name="location"><br><br>
+
+        <button type="submit" id="submit-button">Submit</button><br><br>
+
+    </form>
+
+    <script>
+        document.getElementById("submit-button").addEventListener("click", async function(event) {
+            // Prevent default form submission
+            event.preventDefault();
+
+            // Gather form data
+            const title = document.getElementById("title").value;
+            const date = document.getElementById("date").value;
+            const time = document.getElementById("time").value;
+            const location = document.getElementById("location").value;
+
+            // Create the event object
+            const newEvent = {
+                Title: title,
+                Date: date,
+                Time: time,
+                Location: location
+            };
+
+            try {
+                // Send data to the API using fetch
+                const response = await fetch('/api/events', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newEvent)
+                });
+
+                if (response.ok) {
+                    alert("Event posted successfully!");
+                    window.location.replace("/HomePage.html");
+                } else {
+                    alert("Failed to post event. Please try again.");
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert("An error occurred while posting the event.");
+            }
+        });
+    </script>
+
+
+</body>
+</head>
+</html>

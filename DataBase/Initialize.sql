@@ -16,3 +16,15 @@ CREATE TABLE Users (
     Password VARCHAR(255) NOT NULL,
     CreatedAt DATETIME NOT NULL DEFAULT GETDATE()
 );
+
+CREATE TABLE Events (
+    EventId INT PRIMARY KEY IDENTITY(1,1),
+    Title NVARCHAR(255) NOT NULL,
+    Date NVARCHAR(50) NOT NULL,
+    Time NVARCHAR(50) NOT NULL,
+    Location NVARCHAR(255) NOT NULL
+);
+
+INSERT INTO events (Title, Date, Time, Location)
+VALUES ('Clemson vs South Carolina', 'November 25, 2024', '8:00 PM', 'Death Valley');
+

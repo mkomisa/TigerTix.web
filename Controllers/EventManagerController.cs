@@ -31,7 +31,7 @@ public class EventManagersController : Controller{
 
              // Redirect to HomePage.html with manager information in query strings
             string fullName = $"{manager.FirstName} {manager.LastName}";
-            return Redirect($"/HomePage.html?username={manager.Username}&fullname={fullName}");
+            return Redirect($"/HomePage.html?username={manager.Username}&fullname={fullName}&ManagerId={manager.ManagerId}");
 
         }
 
