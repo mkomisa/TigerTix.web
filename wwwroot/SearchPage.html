@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiger Tix - Search Results</title>
+    <link rel="stylesheet" href="SearchPageStyle.css">
+</head>
+<body>
+    <div class="header">
+        <h1 class="title">Tiger Tix - Search Results</h1>
+        <p class="description">Results for your event search.</p>
+    </div>
+
+    <!-- Search Box Section -->
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-bar" placeholder="Search for events"><br><br>
+        <button id="searchButton" class="search-button">Search</button>
+    </div>
+
+    <div id="events-list"></div>
+
+    <script>
+        // Function to get the value of a query string parameter by name
+        function getQueryStringValue(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Fetch events based on the title parameter from the URL
+        async function fetchEventsByTitle() {
+            const title = getQueryStringValue('title');
+            if (title) {
+                try {
+                    // Make a GET request to the getEventByTitle API with the query parameter 'title'
+                    const response = await fetch(`/api/events/search?title=${encodeURIComponent(title)}`, {
+                        method: 'GET'
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+
+                    const events = await response.json();
+                    const eventsListDiv = document.getElementById('events-list');
+
+                    if (events.length === 0) {
+                        eventsListDiv.innerHTML = `<p>No events found for "${title}".</p>`;
+                    } else {
+                        eventsListDiv.innerHTML = ''; // Clear any previous content
+                        events.forEach(event => {
+                            // Create a button for each event to match the homepage layout
+                            const eventDiv = document.createElement('div');
+                            eventDiv.classList.add('events-item');
+                            eventDiv.innerHTML = `
+                                <button class="event-button">
+                                    <h3>${event.title}</h3>
+                                    <p>Date: ${event.date}</p>
+                                    <p>Time: ${event.time}</p>
+                                    <p>Location: ${event.location}</p>
+                                </button>
+                            `;
+                            eventsListDiv.appendChild(eventDiv);
+                        });
+                    }
+                } catch (error) {
+                    console.error('There was a problem fetching the events:', error);
+                    document.getElementById('events-list').innerHTML = '<p>Error fetching events. Please try again later.</p>';
+                }
+            } else {
+                document.getElementById('events-list').innerHTML = '<p>No search query provided.</p>';
+            }
+        }
+
+        // Function to handle the search button click
+        function handleSearchButtonClick() {
+            const searchInput = document.getElementById('searchInput').value.trim();
+            if (searchInput) {
+                // Reload the page with the search query as a query parameter in the URL
+                window.location.href = `/SearchPage.html?title=${encodeURIComponent(searchInput)}`;
+            }
+        }
+
+        // Attach event listener to the search button
+        document.getElementById('searchButton').addEventListener('click', handleSearchButtonClick);
+
+        // Call the fetchEventsByTitle function when the page loads
+        window.onload = fetchEventsByTitle;
+    </script>
+</body>
+</html>
