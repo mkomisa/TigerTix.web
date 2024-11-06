@@ -40,15 +40,43 @@ public class EventController : Controller{
 
     }
         return Ok(events);
-
 }
+    //putting in Http attribute makes it a child route
+    [HttpGet("search")]
+    public IActionResult GetEventsByTitle(string title){
+         var events = new List<Event>();
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                //"LIKE" is used in SQL command to get events simiar not exact incase of spelling errors
+                var command = new SqlCommand("SELECT * FROM Events WHERE Title LIKE @Title", connection);
+                command.Parameters.AddWithValue("@Title", "%" + title + "%");
+                var reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Event myevent = new Event
+                    {
+                        EventId = (int)reader["EventId"],
+                        Title = reader["Title"].ToString(),
+                        Date = reader["Date"].ToString(),
+                        Time = reader["Time"].ToString(),
+                        Location = reader["Location"].ToString()
+                    };
+                    events.Add(myevent);
+                }
+            }
+
+            return Ok(events);
+        }
+
     [HttpPost]
     public IActionResult Post([FromBody]Event newEvent )
     {
         using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                 var command = new SqlCommand("INSERT INTO events (Title, Date, Time, Location) VALUES (@Title, @Date, @Time, @Location)", connection);
+                var command = new SqlCommand("INSERT INTO events (Title, Date, Time, Location) VALUES (@Title, @Date, @Time, @Location)", connection);
                 command.Parameters.AddWithValue("@Title", newEvent.Title);
                 command.Parameters.AddWithValue("@Date", newEvent.Date);
                 command.Parameters.AddWithValue("@Time", newEvent.Time);

@@ -17,7 +17,8 @@
 
     <div id="manager-actions"></div>
     <div class="search-container">
-        <input type="text" class="search-bar" placeholder="search for events">
+        <input type="text" id="searchInput" class="search-bar" placeholder="search for events"><br><br>
+        <button id="searchButton" class="search-button">Search</button>
     </div>
 
     <div id="events-list"></div>
@@ -80,6 +81,18 @@
                 console.error('There was a problem fetching the events:', error);
             }
         }
+
+    function handleSearchButtonClick() {
+        const searchInput = document.getElementById('searchInput').value.trim();
+        if (searchInput) {
+            // Redirect to SearchPage.html with the search query in the URL
+            window.location.href = `/SearchPage.html?title=${encodeURIComponent(searchInput)}`;
+        }
+    }
+
+    // Attach event listener to the search button
+    document.getElementById('searchButton').addEventListener('click', handleSearchButtonClick);
+
     window.onload = fetchEvents;
     </script>
 </body>
