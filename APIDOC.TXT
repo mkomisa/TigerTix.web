@@ -1,0 +1,115 @@
+API Documentation for TigerTix
+
+This document outlines the TigerTix API, which allows for the management of events, users, and event managers. The following endpoints are:
+
+-----------------------------------------------------------------------------------------------------------------
+
+1. **GET /events**
+   - **Description**: Retrieve a list of all events.
+   - **Parameters**: None
+   - **Responses**:
+     - 200: Returns a list of events.
+     - 500: Server error.
+
+2. **POST /events**
+   - **Description**: Create a new event.
+   - **Parameters**:
+     - Request Body: Event object (JSON format)
+       - `title` (string, required)
+       - `date` (string, required)
+       - `time` (string, required)
+       - `location` (string, required)
+   - **Responses**:
+     - 200: Event created successfully.
+     - 500: Server error.
+
+3. **GET /events/search**
+   - **Description**: Search for events by title.
+   - **Parameters**:
+     - `title` (string, required): Partial or full title to search for.
+   - **Responses**:
+     - 200: Returns a list of matching events.
+     - 404: No events found.
+
+4. **POST /user/signup**
+   - **Description**: Register a new user.
+   - **Parameters**:
+     - `firstName` (string, required)
+     - `lastName` (string, required)
+     - `username` (string, required)
+     - `password` (string, required)
+   - **Responses**:
+     - 302: Redirect to login page on success.
+     - 400: Validation errors.
+
+5. **POST /user/signin**
+   - **Description**: Log in a user.
+   - **Parameters**:
+     - `username` (string, required)
+     - `password` (string, required)
+   - **Responses**:
+     - 302: Redirect to homepage on success.
+     - 400: Validation errors.
+
+6. **POST /eventmanager/signin**
+   - **Description**: Log in an event manager.
+   - **Parameters**:
+     - `username` (string, required)
+     - `password` (string, required)
+   - **Responses**:
+     - 302: Redirect to homepage on success.
+     - 400: Validation errors.
+
+---
+
+### Data Model Descriptions:
+
+- **Event**:
+  - `eventId` (integer, optional)
+  - `title` (string, required)
+  - `date` (string, required)
+  - `time` (string, required)
+  - `location` (string, required)
+
+- **User**:
+  - `userId` (integer, optional)
+  - `username` (string, required)
+  - `password` (string, required)
+  - `firstName` (string, required)
+  - `lastName` (string, required)
+
+- **EventManager**:
+  - `managerId` (integer, optional)
+  - `username` (string, required)
+  - `password` (string, required)
+  - `firstName` (string, required)
+  - `lastName` (string, required)
+
+---
+
+### Mappings to Data Flow Diagrams (DFDs): implemented so far
+
+- When creating an account as a student, The user controller is accessed 
+which accesses the sql DB and POSTS a user.cs context info permanently if 
+it is valid
+- When creating an account as a manager, the manager controller will create 
+an instance of EventManager.cs and post to the DB permanently if it is valid
+- When Searching for events, a user enters a query which is sent to 
+Event Manager Controller which GETS events from DB that match the query 
+which then passes those available events to the user
+- Without searching for events, the event manager will GET all events instances
+within the DB and return them to the user
+
+### Input Parameters:
+The API accepts various input parameters, such as:
+- **Event**: `title`, `date`, `time`, `location`.
+- **User**: `firstName`, `lastName`, `username`, `password`.
+- **EventManager**: `username`, `password`.
+
+### Return Codes:
+The API returns standard HTTP response codes to indicate success or failure:
+- 200: Successful request (e.g., event retrieved or created).
+- 302: Redirect (e.g., successful login).
+- 400: Bad request (e.g., validation errors).
+- 404: Not found (e.g., no matching events found).
+- 500: Server error (e.g., internal server failure).

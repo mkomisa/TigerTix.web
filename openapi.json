@@ -1,0 +1,202 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "TigerTix API",
+        "description": "API documentation for managing events, users, and event managers in TigerTix.",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://yourwebsite.com/api",
+            "description": "Production server"
+        },
+        {
+            "url": "http://localhost:5000/api",
+            "description": "Local development server"
+        }
+    ],
+    "paths": {
+        "/events": {
+            "get": {
+                "summary": "Get all events",
+                "responses": {
+                    "200": {
+                        "description": "List of all events",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": { "$ref": "#/components/schemas/Event" }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create a new event",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": { "$ref": "#/components/schemas/Event" }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": { "description": "Event created successfully" },
+                    "500": { "description": "Server error" }
+                }
+            }
+        },
+        "/events/search": {
+            "get": {
+                "summary": "Search for events by title",
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "required": true,
+                        "schema": { "type": "string" },
+                        "description": "Partial or full title to search for"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of matching events",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": { "$ref": "#/components/schemas/Event" }
+                                }
+                            }
+                        }
+                    },
+                    "404": { "description": "No events found" }
+                }
+            }
+        },
+        "/user/signup": {
+            "post": {
+                "summary": "Register a new user",
+                "parameters": [
+                    {
+                        "name": "firstName",
+                        "in": "query",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    },
+                    {
+                        "name": "lastName",
+                        "in": "query",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    },
+                    {
+                        "name": "username",
+                        "in": "query",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "responses": {
+                    "302": { "description": "Redirect to login page on success" },
+                    "400": { "description": "Validation errors" }
+                }
+            }
+        },
+        "/user/signin": {
+            "post": {
+                "summary": "Log in a user",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "query",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "responses": {
+                    "302": { "description": "Redirect to homepage on success" },
+                    "400": { "description": "Validation errors" }
+                }
+            }
+        },
+        "/eventmanager/signin": {
+            "post": {
+                "summary": "Log in an event manager",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "query",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "required": true,
+                        "schema": { "type": "string" }
+                    }
+                ],
+                "responses": {
+                    "302": { "description": "Redirect to homepage on success" },
+                    "400": { "description": "Validation errors" }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Event": {
+                "type": "object",
+                "properties": {
+                    "eventId": { "type": "integer" },
+                    "title": { "type": "string" },
+                    "date": { "type": "string" },
+                    "time": { "type": "string" },
+                    "location": { "type": "string" }
+                },
+                "required": [ "title", "date", "time", "location" ]
+            },
+            "User": {
+                "type": "object",
+                "properties": {
+                    "userId": { "type": "integer" },
+                    "username": { "type": "string" },
+                    "password": { "type": "string" },
+                    "firstName": { "type": "string" },
+                    "lastName": { "type": "string" }
+                },
+                "required": [ "username", "password", "firstName", "lastName" ]
+            },
+            "EventManager": {
+                "type": "object",
+                "properties": {
+                    "managerId": { "type": "integer" },
+                    "username": { "type": "string" },
+                    "password": { "type": "string" },
+                    "firstName": { "type": "string" },
+                    "lastName": { "type": "string" }
+                },
+                "required": [ "username", "password", "firstName", "lastName" ]
+            }
+        }
+    }
+}
