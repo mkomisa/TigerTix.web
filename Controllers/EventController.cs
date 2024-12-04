@@ -70,6 +70,7 @@ public class EventController : Controller{
             return Ok(events);
         }
 
+
     [HttpPost]
     public IActionResult Post([FromBody]Event newEvent )
     {
@@ -95,6 +96,27 @@ public class EventController : Controller{
         }
 
                 
+
+
+    [HttpPost("delete")]
+    public IActionResult DeleteEvent(int EventID){
+        using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                var command = new SqlCommand("DELETE FROM Events WHERE EventId=@EventID", connection);
+                command.Parameters.AddWithValue("@EventID",EventID);
+                int rowsAffected = command.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    return Ok("Event deleted successfully");
+                }
+                else
+                {
+                    return StatusCode(500, "An error occurred while deleting the event or EventID doesn't exist");
+                }
+
+    }
+    }
 }
 }
 

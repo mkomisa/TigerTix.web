@@ -1,0 +1,6 @@
+.buttonLabel{
+    color: red;
+}
+.deleteButton:hover {
+    background-color: red;
+}

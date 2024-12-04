@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <Head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Event</title>
+    <link rel="stylesheet" href="DeleteEventStyle.css">
+    </Head>
+    <h1>DELETE EVENT</h1>
+<form id="deleteEventForm">
+    <label class="buttonLabel" for="EventID">Enter the EventID</label>
+    <input id="EventID" name="EventID" required><br><br>
+    <button class="deleteButton"type="submit">Delete</button>
+</form>
+<script>
+    document.getElementById('deleteEventForm').addEventListener('submit', async function (e) {
+        e.preventDefault(); // Prevent the default form submission behavior
+
+        const eventID = document.getElementById('EventID').value;
+
+        try {
+            // Send POST request to the API
+            const response = await fetch('/api/events/delete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({ EventID: eventID })
+            });
+
+            if (response.ok) {
+                // If the API returns OK, show an alert
+                alert("Event has been deleted successfully.");
+                window.location.replace("/HomePage.html");
+            } else {
+                // Handle errors by showing an alert
+                const errorText = await response.text();
+                alert(`Error: ${errorText}`);
+            }
+        } catch (error) {
+            // Handle network errors
+            alert(`An error occurred: ${error.message}`);
+        }
+    });
+</script>
+
+
+</html>
