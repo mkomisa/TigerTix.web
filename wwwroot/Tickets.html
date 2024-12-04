@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tickets</title>
+    <link rel="stylesheet" href="TicketsStyles.css">
+</head>
+<body>
+    <div class="header">
+        <h1 class="title">Event Tickets</h1>
+        <p class="description">View available tickets for your selected event.</p>
+    </div>
+
+    <div id="tickets-list"></div>
+
+    <script>
+        // Function to get the value of a query string parameter by name
+        function getQueryStringValue(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        async function fetchTickets() {
+            // Get the eventID from the query string
+            const eventID = getQueryStringValue('eventID');
+
+            if (!eventID) {
+                alert("No eventID provided in the query string.");
+                return;
+            }
+
+            try {
+                // Call the API with the eventID as a query parameter
+                const response = await fetch(`/api/ticket?eventID=${encodeURIComponent(eventID)}`, { method: 'GET' });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                // Parse the JSON response
+                const tickets = await response.json();
+
+                // Display the tickets
+                const ticketsListDiv = document.getElementById('tickets-list');
+                ticketsListDiv.innerHTML = ''; // Clear any existing tickets
+
+                if (tickets.length === 0) {
+                    ticketsListDiv.innerHTML = '<p>No tickets available for this event.</p>';
+                } else {
+                    tickets.forEach(ticket => {
+                        const ticketDiv = document.createElement('div');
+                        ticketDiv.classList.add('ticket-item');
+                        ticketDiv.innerHTML = `
+                            <h3 class=TicketName>Ticket Name: ${ticket.ticketName}</h3>
+                            <p class=price>Price: $${ticket.price}</p>
+                            <p>Ticket ID: ${ticket.ticketID}</p>
+                            <p>Event ID: ${ticket.eventId}</p>
+                        `;
+                        ticketsListDiv.appendChild(ticketDiv);
+                    });
+                }
+            } catch (error) {
+                console.error('There was a problem fetching the tickets:', error);
+                const ticketsListDiv = document.getElementById('tickets-list');
+                ticketsListDiv.innerHTML = '<p>Failed to load tickets. Please try again later.</p>';
+            }
+        }
+
+        // Fetch tickets on page load
+        window.onload = fetchTickets;
+    </script>
+</body>
+</html>
