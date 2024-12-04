@@ -17,26 +17,33 @@ namespace TigerTix.web.Controllers
     [Route("api/ticket")]
     [HttpGet]
     public IActionResult getTicketsByEventID(string eventID){
-        List<Ticket> tickets= new List<Ticket>();
+        var tickets= new List<Ticket>();
          using (var connection = new SqlConnection(_connectionString))
         {
             connection.Open();
-            var command = new SqlCommand("SELECT * FROM Tickets WHERE EventID=@eventID", connection);
-            command.Parameters.AddWithValue("@EventID", "%" + eventID + "%");
+            var command = new SqlCommand("SELECT * FROM Tickets WHERE EventId=@EventId", connection);
+            command.Parameters.AddWithValue("@EventId", int.Parse(eventID));
             var reader = command.ExecuteReader();
-
              while (reader.Read())
                 {
+                     for (int i = 0; i < reader.FieldCount; i++)
+            {
+                Console.WriteLine($"{reader.GetName(i)}: {reader[i]}");
+            }
+
                     Ticket myTicket = new Ticket
                     {
+                        ticketID=(int)reader["TicketId"],
                         EventId = (int)reader["EventId"],
                         ticketName = reader["TicketName"].ToString(),
-                        price = (double)reader["Price"]
+                        price = Convert.ToDouble(reader["Price"])
                     };
+    
                     tickets.Add(myTicket);
+                    Console.WriteLine($"Added Ticket: {tickets[0]}");
                 }
-        }
         return Ok(tickets);
-    } 
+        }
+    }
     }
 }

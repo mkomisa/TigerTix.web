@@ -57,30 +57,42 @@
         }
 
         async function fetchEvents() {
-            try {
-                const response = await fetch('/api/events',{method:'GET'});
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const events = await response.json();
-                const eventsListDiv = document.getElementById('events-list');
-                events.forEach(event => {
-                    const eventDiv = document.createElement('div');
-                    eventDiv.classList.add('events-item');
-                    eventDiv.innerHTML = `
-                        <button class="event-button">
-                        <h3>${event.title}</h3>
-                        <p>Date: ${event.date}</p>
-                        <p>Time: ${event.time}</p>
-                        <p>Location: ${event.location}</p>
-                        </button>
-                    `;
-                    eventsListDiv.appendChild(eventDiv);
-                });
-            } catch (error) {
-                console.error('There was a problem fetching the events:', error);
-            }
+        try {
+        const response = await fetch('/api/events', { method: 'GET' });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
+        const events = await response.json();
+        const eventsListDiv = document.getElementById('events-list');
+        eventsListDiv.innerHTML = ''; // Clear any existing events
+
+        events.forEach(event => {
+            const eventDiv = document.createElement('div');
+            eventDiv.classList.add('events-item');
+            eventDiv.innerHTML = `
+                <button class="event-button" data-event-id="${event.eventId}">
+                    <h3>${event.title}</h3>
+                    <p>Date: ${event.date}</p>
+                    <p>Time: ${event.time}</p>
+                    <p>Location: ${event.location}</p>
+                </button>
+            `;
+            eventsListDiv.appendChild(eventDiv);
+        });
+
+        // Attach click event listeners to all event buttons
+        const eventButtons = document.querySelectorAll('.event-button');
+        eventButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const eventId = button.getAttribute('data-event-id');
+                window.location.href = `/tickets.html?eventID=${encodeURIComponent(eventId)}`;
+            });
+        });
+    } catch (error) {
+        console.error('There was a problem fetching the events:', error);
+    }
+}
+
 
     function handleSearchButtonClick() {
         const searchInput = document.getElementById('searchInput').value.trim();
